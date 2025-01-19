@@ -33,7 +33,7 @@ getgenv().FpsCap = 20
             Enable = false,
             Races = {"Mink","Fishman","Human","Skypiea"}
         },
-       MinFragment = 50000, --Farm After Max Level
+       MinFragment = 60000, --Farm After Max Level
     }
     getgenv().OneClickFarms = {
         ["Shark Anchor"] = false,
