@@ -152,7 +152,7 @@ local Moon = {
         end
         
         
-        _G.ServerHop = true
+        _G.ServerHop = false
         
         while _G.ServerHop do
             wait(0.05)
