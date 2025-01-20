@@ -39,12 +39,12 @@ local Moon = {
         PlayersMin = i
     end
 
-    MoonMessage = '```'..tostring(MoonPercent..'%'..' : '..MoonIcon)..'```'
+    BossMessage = '```'..Rip Indra..'```'
     CodeServer = 'game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,'..'\''..tostring(game.JobId)..'\''..')'
     function logTime(...) log(..., "|", math.round((tick() - loadTime) * 1000), "ms") end
 
 		local Embed = {
-			 ["username"] = "Full Moon Notify",
+			 ["username"] = "Boss Notify",
 			 ["avatar_url"] = "https://cdn.discordapp.com/attachments/1258228428881137677/1258228644959096907/1705502093042.jpg?ex=6687483d&is=6685f6bd&hm=31d72cdb691c08bba64e22e59af42a1c4bad11b6ef8bad223436bf883d4e334a&",
 			 ["embeds"] = {
 				{
@@ -68,8 +68,8 @@ local Moon = {
 							["inline"] = true
                         },
                         {
-							["name"] = "Moon",
-							["value"] = ''..MoonMessage..'',
+							["name"] = "Boss",
+							["value"] = ''..BossMessage..'',
 							["inline"] = true
                         }
 					},
