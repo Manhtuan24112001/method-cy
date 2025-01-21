@@ -24,8 +24,8 @@ _G.Fruits_Settings = { -- ตั้งค่าผล
     ['Select_Fruits'] = {"Flame-Flame", "Ice-Ice", "Quake-Quake", "Light-Light", "Dark-Dark", "Spider-Spider", "Rumble-Rumble", "Magma-Magma", "Buddha-Buddha"} -- กินหรือซื้อตอนไม่มีผล
 }
 _G.Quests_Settings = { -- ตั้งค่าเควสหลักๆ
-    ['Rainbow_Haki'] = true,
-    ["MusketeerHat"] = true,
+    ['Rainbow_Haki'] = false,
+    ["MusketeerHat"] = false,
     ["PullLever"] = true,
     ['DoughQuests_Mirror'] = {
         ['Enabled'] = true,
@@ -35,8 +35,8 @@ _G.Quests_Settings = { -- ตั้งค่าเควสหลักๆ
 _G.Races_Settings = { -- ตั้งค่าเผ่า
     ['Race'] = {
         ['EnabledEvo'] = false,
-        ["v2"] = true,
-        ["v3"] = true,
+        ["v2"] = false,
+        ["v3"] = false,
         ["Races_Lock"] = {
             ["Races"] = { -- Select Races U want
                 ["Mink"] = false,
@@ -68,19 +68,19 @@ _G.FarmMastery_Settings = {
     }
 }
 _G.SwordSettings = { -- ดาบที่จะทำ
-    ['Saber'] = true,
-    ["Pole"] = true,
-    ['MidnightBlade'] = true,
-    ['Shisui'] = true,
-    ['Saddi'] = true,
-    ['Wando'] = true,
-    ['Yama'] = true,
-    ['Rengoku'] = true,
-    ['Canvander'] = true,
-    ['BuddySword'] = true,
-    ['TwinHooks'] = true,
-    ['HallowScryte'] = true,
-    ['TrueTripleKatana'] = true,
+    ['Saber'] = false,
+    ["Pole"] = false,
+    ['MidnightBlade'] = false,
+    ['Shisui'] = false,
+    ['Saddi'] = false,
+    ['Wando'] = false,
+    ['Yama'] = false,
+    ['Rengoku'] = false,
+    ['Canvander'] = false,
+    ['BuddySword'] = false,
+    ['TwinHooks'] = false,
+    ['HallowScryte'] = false,
+    ['TrueTripleKatana'] = false,
     ['CursedDualKatana'] = true
 }
 _G.SharkAnchor_Settings = {
@@ -88,8 +88,8 @@ _G.SharkAnchor_Settings = {
     ['FarmAfterMoney'] = 2500000
 }
 _G.GunSettings = { -- ปืนที่จะทำ
-    ['Kabucha'] = true,
-    ['SerpentBow'] = true,
+    ['Kabucha'] = false,
+    ['SerpentBow'] = false,
     ['SoulGuitar'] = true
 }
 getgenv().Key = "MARU-ZIHWD-NP257-5GNW-FZ4M6-BGRT"
