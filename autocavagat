@@ -15,7 +15,7 @@ if placeId == 7449423635 then
         for _, item in ipairs(player.Backpack:GetChildren()) do
             if item.Name == "Water Body" then
                 agilityItemFound = true
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/cay60kf"))()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autogatcanbebe"))()
             end
         end
         if not agilityItemFound then
