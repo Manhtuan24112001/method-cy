@@ -8,7 +8,7 @@ if placeId == 7449423635 then
     local RaceOption = "Fishman"
 
     if RaceName ~= RaceOption then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/cuttayfishman"))()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/cay60kf"))()
     elseif RaceName == RaceOption then
         local agilityItemFound = false
         -- Check for the "Heavenly Blood" item in the player's backpack
