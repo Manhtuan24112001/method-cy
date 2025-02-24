@@ -1,7 +1,7 @@
 --[[ 
     WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk! 
 ]]
-LinkHook = "https://discord.com/api/webhooks/1325050145557188669/R4C75XekPzRg3EBg0yQDOkYg9TXPpD2ERgSQ2qoN_ji7awqZ3PbQrTsYgMgf1Jd-goKC" -- webhook to send the moon status
+LinkHook = "https://discord.com/api/webhooks/1325924531331666000/Vt3DG3GmRv1sXHxCGzMKttjGL4uGHTuacefkOK47FRYs7ylRaPtqe5DAf0OjgmG9Liwv" -- webhook to send the moon status
 
 local Moon = {
     ['8'] = "http://www.roblox.com/asset/?id=9709149431", -- 🌕
