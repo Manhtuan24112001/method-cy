@@ -21,13 +21,9 @@ local function updateInfo(message)
     infoLabel.Text = message
 end
 
--- Thêm chức năng làm mới thông tin mỗi 20 giây
+-- Thêm chức năng làm mới thông tin mỗi 20 giây (mặc dù không làm mới nội dung)
 local function refreshInfo()
     while true do
-        -- Cập nhật lại thông tin Level và RaceFragments
-        local level = player.Data.Level.Value
-        local RaceFragments = player.Data.Fragments.Value
-        updateInfo(string.format("Level: %d, RaceFragments: %d", level, RaceFragments))
         wait(20)  -- Chờ 20 giây trước khi cập nhật lại
     end
 end
@@ -36,7 +32,7 @@ end
 spawn(refreshInfo)
 
 -- Cập nhật thông tin ban đầu
-updateInfo("Đang kiểm tra level và RaceFragments...")
+updateInfo("Thông tin đang được tải...")
 
 -- Đợi game tải xong
 wait(20)
@@ -63,20 +59,6 @@ local RaceFragments = Players.LocalPlayer.Data.Fragments.Value
 
 -- Cập nhật thông tin cho UI
 updateInfo("Đang kiểm tra level và RaceFragments...")
-
--- Thêm chức năng làm mới thông tin mỗi 20 giây
-local function refreshInfo()
-    while true do
-        -- Cập nhật lại thông tin Level và RaceFragments
-        level = Players.LocalPlayer.Data.Level.Value
-        RaceFragments = Players.LocalPlayer.Data.Fragments.Value
-        updateInfo(string.format("Level: %d, RaceFragments: %d", level, RaceFragments))
-        wait(20)  -- Chờ 20 giây trước khi cập nhật lại
-    end
-end
-
--- Bắt đầu làm mới thông tin mỗi 20 giây trong một luồng riêng
-spawn(refreshInfo)
 
 -- Nếu level <= 2300, chạy script 1
 repeat
