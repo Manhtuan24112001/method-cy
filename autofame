@@ -9,16 +9,56 @@ screenGui.Parent = playerGui
 local infoLabel = Instance.new("TextLabel")
 infoLabel.Size = UDim2.new(0, 400, 0, 50)
 infoLabel.Position = UDim2.new(0, 50, 0, 50)
-infoLabel.Text = "Script đang chạy: Đang kiểm tra Level..."
+infoLabel.Text = "Thông tin đang được tải..."
 infoLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 infoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 infoLabel.Font = Enum.Font.SourceSans
 infoLabel.TextSize = 24
 infoLabel.Parent = screenGui
 
--- Cập nhật TextLabel với thông tin về script
+-- Tạo bảng kiểm tra các vật phẩm
+local itemCheckTable = Instance.new("TextLabel")
+itemCheckTable.Size = UDim2.new(0, 400, 0, 100)
+itemCheckTable.Position = UDim2.new(0, 50, 0, 120)
+itemCheckTable.Text = "Valkyrie Helm: Chưa có\nTushita: Chưa có\nCursed Dual Katana: Chưa có\nSkull Guitar: Chưa có"
+itemCheckTable.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+itemCheckTable.TextColor3 = Color3.fromRGB(255, 255, 255)
+itemCheckTable.Font = Enum.Font.SourceSans
+itemCheckTable.TextSize = 18
+itemCheckTable.Parent = screenGui
+
+-- Cập nhật thông tin cho UI
 local function updateInfo(message)
     infoLabel.Text = message
+end
+
+-- Cập nhật bảng kiểm tra vật phẩm
+local function updateItemCheckTable()
+    local inventory = game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventory")
+    local hasValkyrieHelm = false
+    local hasTushita = false
+    local hasCursedDualKatana = false
+    local hasSkullGuitar = false
+
+    -- Kiểm tra các vật phẩm trong inventory
+    for i, v in next, inventory do
+        if v.Name == "Valkyrie Helm" then
+            hasValkyrieHelm = true
+        elseif v.Name == "Tushita" then
+            hasTushita = true
+        elseif v.Name == "Cursed Dual Katana" then
+            hasCursedDualKatana = true
+        elseif v.Name == "Skull Guitar" then
+            hasSkullGuitar = true
+        end
+    end
+
+    -- Cập nhật bảng kiểm tra vật phẩm
+    itemCheckTable.Text = string.format("Valkyrie Helm: %s\nTushita: %s\nCursed Dual Katana: %s\nSkull Guitar: %s",
+        hasValkyrieHelm and "Có" or "Chưa có",
+        hasTushita and "Có" or "Chưa có",
+        hasCursedDualKatana and "Có" or "Chưa có",
+        hasSkullGuitar and "Có" or "Chưa có")
 end
 
 -- Đợi game tải xong
@@ -47,10 +87,25 @@ local RaceFragments = Players.LocalPlayer.Data.Fragments.Value
 -- Cập nhật thông tin cho UI
 updateInfo("Đang kiểm tra level và RaceFragments...")
 
--- Kiểm tra level và thực hiện hành động tương ứng
+-- Thêm chức năng làm mới thông tin mỗi 20 giây
+local function refreshInfo()
+    while true do
+        -- Cập nhật lại thông tin Level và RaceFragments
+        level = Players.LocalPlayer.Data.Level.Value
+        RaceFragments = Players.LocalPlayer.Data.Fragments.Value
+        updateInfo(string.format("Level: %d, RaceFragments: %d", level, RaceFragments))
+        updateItemCheckTable()  -- Cập nhật bảng kiểm tra vật phẩm
+        wait(20)  -- Chờ 20 giây trước khi cập nhật lại
+    end
+end
+
+-- Bắt đầu làm mới thông tin mỗi 20 giây trong một luồng riêng
+spawn(refreshInfo)
+
+-- Nếu level <= 2300, chạy script 1
 repeat
     if level <= 2300 then
-        updateInfo("Đang cày lever này thằng lol")
+        updateInfo("Đang cày level này thằng lol")
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/method-cy/refs/heads/main/wazurekaitun"))()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/adfen"))()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autochat"))()
@@ -59,49 +114,8 @@ repeat
     level = Players.LocalPlayer.Data.Level.Value  -- Cập nhật level người chơi
 until level > 2300
 
--- Kiểm tra inventory và chạy các script tương ứng
+-- Nếu level >= 2300
 repeat
-    local inventory = game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventory")
-    local hasValkyrieHelm, hasTushita, hasCursedDualKatana, hasSkullGuitar, hasMirrorFractal = false, false, false, false, false
-
-    -- Kiểm tra các vật phẩm trong inventory
-    for i, v in next, inventory do
-        if v.Name == "Valkyrie Helm" then
-            hasValkyrieHelm = true
-        elseif v.Name == "Tushita" then
-            hasTushita = true
-        elseif v.Name == "Cursed Dual Katana" then
-            hasCursedDualKatana = true
-        elseif v.Name == "Skull Guitar" then
-            hasSkullGuitar = true
-        elseif v.Name == "Mirror Fractal" then
-            hasMirrorFractal = true
-        end
-    end
-
-    -- Cập nhật thông tin UI
-    updateInfo("Kiểm tra các vật phẩm trong inventory...")
-
-    -- Nếu thiếu "Valkyrie Helm" hoặc "Tushita", chạy script 1
-    if not (hasValkyrieHelm and hasTushita) then
-        updateInfo("...bố đang đi nấy mũ với kiếm nè con...")
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/method-cy/refs/heads/main/wazurekaitun"))()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/adfen"))()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autochat"))()
-    elseif not (hasCursedDualKatana and hasSkullGuitar and hasMirrorFractal) then
-        -- Nếu thiếu "Cursed Dual Katana", "Skull Guitar" hoặc "Mirror Fractal", chạy script khác
-        updateInfo("...bố đang chạy nấy cdk và sgt nè con...")
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/cay60kf2"))()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/adfen"))()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autochat"))()
-    else
-        -- Nếu có đầy đủ các vật phẩm
-        if level == 2600 and RaceFragments == 20000 then
-            updateInfo("...bố đang đi gạt nè con ...")
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autogatcan2"))()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/adfen"))()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autochat"))()
-        end
-    end
+    updateItemCheckTable()  -- Cập nhật bảng kiểm tra vật phẩm mỗi lần
     task.wait(5)  -- Chờ trước khi kiểm tra lại
-until level >= 2300 and hasValkyrieHelm and hasTushita and hasCursedDualKatana and hasSkullGuitar and hasMirrorFractal
+until level >= 2300
