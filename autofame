@@ -148,7 +148,6 @@ updateInfo("Đang kiểm tra level và RaceFragments...")
 repeat
     if level <= 2300 then
         updateInfo("Đang cày lever này thằng lol")
-      spawn(function())
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/method-cy/refs/heads/main/wazurekaitun"))()
         loadstring(game:HttpGet("https://https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/adfen"))()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autochat"))()
@@ -187,7 +186,6 @@ repeat
     -- Nếu không có cả "Valkyrie Helm" và "Tushita", chạy script 1
     if not (hasValkyrieHelm and hasTushita) then
         updateInfo("...bố đang đi nấy mũ với kiếm nè con...")
-   spawn(function())
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/method-cy/refs/heads/main/wazurekaitun"))()
         loadstring(game:HttpGet("https://https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/adfen"))()
         loadstring(game:HttpGet("-- Tạo UI hiển thị thông tin trạng thái
@@ -244,7 +242,6 @@ updateInfo("Đang kiểm tra level và RaceFragments...")
 repeat
     if level <= 2300 then
         updateInfo("Đang cày lever này thằng lol")
-      spawn(function())
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/method-cy/refs/heads/main/wazurekaitun"))()
         loadstring(game:HttpGet("https://https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/adfen"))()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autochat"))()
@@ -283,7 +280,6 @@ repeat
     -- Nếu không có cả "Valkyrie Helm" và "Tushita", chạy script 1
     if not (hasValkyrieHelm and hasTushita) then
         updateInfo("...bố đang đi nấy mũ với kiếm nè con...")
-   spawn(function())
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/method-cy/refs/heads/main/wazurekaitun"))()
         loadstring(game:HttpGet("https://https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/adfen"))()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/method-cy/refs/heads/main/autoteleboss"))()
@@ -293,7 +289,6 @@ repeat
        if not (hasCursedDualKatana and hasSkullGuitar and hasMirrorFractal) then
             -- Nếu thiếu "Cursed Dual Katana", "Skull Guitar" hoặc "Mirror Fractal", chạy script 1
             updateInfo("...bố đang chạy nấy cdk và sgt nè con...")
-   spawn(function())
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/cay60kf2"))()
             loadstring(game:HttpGet("https://https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/adfen"))()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autochat"))()
@@ -306,7 +301,6 @@ repeat
                         if RaceFragments == 20000 then
                             -- Nếu có đủ tất cả 4 món, chạy script khác (script 2)
                             updateInfo("...bố đang đi gạt nè con ...")
-       spawn(function())
                             loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autogatcan2"))()
                             loadstring(game:HttpGet("https://https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/adfen"))()
                             loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autochat"))()
@@ -318,7 +312,7 @@ repeat
     end
     task.wait(5)  -- Chờ trước khi kiểm tra lại
 until level >= 2300 and hasValkyrieHelm and hasTushita and hasCursedDualKatana and hasSkullGuitar and hasMirrorFractal
-"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/method-cy/refs/heads/main/wazurekaitun"))()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/autogat/refs/heads/main/autochat"))()
 
     else
