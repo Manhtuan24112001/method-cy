@@ -21,51 +21,22 @@ local function updateInfo(message)
     infoLabel.Text = message
 end
 
--- Hàm cập nhật trạng thái vật phẩm
-local function updateItemStatus()
-    local inventory = game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("getInventory")
-    local hasValkyrieHelm = false
-    local hasTushita = false
-    local hasCursedDualKatana = false
-    local hasSkullGuitar = false
-    local hasMirrorFractal = false
-
-    -- Kiểm tra các vật phẩm trong inventory
-    for i, v in next, inventory do
-        if v.Name == "Valkyrie Helm" then
-            hasValkyrieHelm = true
-        elseif v.Name == "Tushita" then
-            hasTushita = true
-        elseif v.Name == "Cursed Dual Katana" then
-            hasCursedDualKatana = true
-        elseif v.Name == "Skull Guitar" then
-            hasSkullGuitar = true
-        elseif v.Name == "Mirror Fractal" then
-            hasMirrorFractal = true
-        end
-    end
-
-    -- Cập nhật thông tin UI
-    infoLabel.Text = string.format(
-        "Valkyrie Helm: %s\nTushita: %s\nCursed Dual Katana: %s\nSkull Guitar: %s\nMirror Fractal: %s",
-        hasValkyrieHelm and "Có" or "Không", 
-        hasTushita and "Có" or "Không", 
-        hasCursedDualKatana and "Có" or "Không", 
-        hasSkullGuitar and "Có" or "Không", 
-        hasMirrorFractal and "Có" or "Không"
-    )
-end
-
--- Tạo một vòng lặp tự động cập nhật thông tin vật phẩm mỗi 20 giây
-local function autoUpdateItemStatus()
+-- Thêm chức năng làm mới thông tin mỗi 20 giây
+local function refreshInfo()
     while true do
-        updateItemStatus()  -- Cập nhật thông tin vật phẩm
+        -- Cập nhật lại thông tin Level và RaceFragments
+        local level = player.Data.Level.Value
+        local RaceFragments = player.Data.Fragments.Value
+        updateInfo(string.format("Level: %d, RaceFragments: %d", level, RaceFragments))
         wait(20)  -- Chờ 20 giây trước khi cập nhật lại
     end
 end
 
--- Bắt đầu vòng lặp tự động cập nhật thông tin vật phẩm
-spawn(autoUpdateItemStatus)
+-- Bắt đầu làm mới thông tin mỗi 20 giây trong một luồng riêng
+spawn(refreshInfo)
+
+-- Cập nhật thông tin ban đầu
+updateInfo("Đang kiểm tra level và RaceFragments...")
 
 -- Đợi game tải xong
 wait(20)
