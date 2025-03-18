@@ -46,53 +46,58 @@ MoonMessage = '```'..tostring(MoonPercent..'%'..' : '..MoonIcon)..'```'
 CodeServer = 'game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,'..'\''..tostring(game.JobId)..'\''..')'
 function logTime(...) log(..., "|", math.round((tick() - loadTime) * 1000), "ms") end
 
--- Only send webhook if the moon is in phase '7' (🌖) or '8' (🌕)
-if game:GetService("Lighting").Sky.MoonTextureId == Moon['7'] or game:GetService("Lighting").Sky.MoonTextureId == Moon['8'] then
-    local Embed = {
-        ["username"] = "Full Moon Notify",
-        ["avatar_url"] = "https://cdn.discordapp.com/attachments/1258228428881137677/1258228644959096907/1705502093042.jpg?ex=6687483d&is=6685f6bd&hm=31d72cdb691c08bba64e22e59af42a1c4bad11b6ef8bad223436bf883d4e334a&",
-        ["embeds"] = {
-            {
-                ["title"] = "**Full Moon Notify**",
-                ["color"] = tonumber(00000000),
-                ["type"] = "rich",
-                ["fields"] =  {
-                    {
-                        ["name"] = "Players",
-                        ["value"] = '```'..tostring(PlayersMin)..'/12```',
-                        ["inline"] = false
+-- Kiểm tra mặt trăng và số người chơi
+if (game:GetService("Lighting").Sky.MoonTextureId == Moon['7'] or game:GetService("Lighting").Sky.MoonTextureId == Moon['8']) then
+    local PlayersCount = #game.Players:GetPlayers() -- Lấy số lượng người chơi hiện tại trong server
+
+    -- Nếu số người chơi dưới 4 và mặt trăng là Moon 7 (🌖) hoặc Moon 8 (🌕) thì gửi thông báo webhook
+    if PlayersCount < 4 then
+        local Embed = {
+            ["username"] = "Full Moon Notify",
+            ["avatar_url"] = "https://cdn.discordapp.com/attachments/1258228428881137677/1258228644959096907/1705502093042.jpg?ex=6687483d&is=6685f6bd&hm=31d72cdb691c08bba64e22e59af42a1c4bad11b6ef8bad223436bf883d4e334a&",
+            ["embeds"] = {
+                {
+                    ["title"] = "**Full Moon Notify**",
+                    ["color"] = tonumber(00000000),
+                    ["type"] = "rich",
+                    ["fields"] =  {
+                        {
+                            ["name"] = "Players",
+                            ["value"] = '```'..tostring(PlayersCount)..'/12```',
+                            ["inline"] = false
+                        },
+                        {
+                            ["name"] = "Job Id",
+                            ["value"] = '```'..tostring(game.JobId)..'```',
+                            ["inline"] = false
+                        },
+                        {
+                            ["name"] = "Code",
+                            ["value"] = '```'..CodeServer..'```',
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Moon",
+                            ["value"] = ''..MoonMessage..'',
+                            ["inline"] = true
+                        }
                     },
-                    {
-                        ["name"] = "Job Id",
-                        ["value"] = '```'..tostring(game.JobId)..'```',
-                        ["inline"] = false
+                    ["thumbnail"] = {
+                        ["url"] = "https://cdn.discordapp.com/attachments/1258228428881137677/1258228644959096907/1705502093042.jpg?ex=6687483d&is=6685f6bd&hm=31d72cdb691c08bba64e22e59af42a1c4bad11b6ef8bad223436bf883d4e334a&",
                     },
-                    {
-                        ["name"] = "Code",
-                        ["value"] = '```'..CodeServer..'```',
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Moon",
-                        ["value"] = ''..MoonMessage..'',
-                        ["inline"] = true
+                    ["footer"] = {
+                        ["timestamp"] = DateTime.now():ToIsoDate(),
+                        ["icon_url"] = "https://cdn.britannica.com/89/145489-050-4E9609BA/moon-return-journey-Apollo-11-July-21-1969.jpg"
                     }
-                },
-                ["thumbnail"] = {
-                    ["url"] = "https://cdn.discordapp.com/attachments/1258228428881137677/1258228644959096907/1705502093042.jpg?ex=6687483d&is=6685f6bd&hm=31d72cdb691c08bba64e22e59af42a1c4bad11b6ef8bad223436bf883d4e334a&",
-                },
-                ["footer"] = {
-                    ["timestamp"] = DateTime.now():ToIsoDate(),
-                    ["icon_url"] = "https://cdn.britannica.com/89/145489-050-4E9609BA/moon-return-journey-Apollo-11-July-21-1969.jpg"
                 }
-            }
-        },
-    }
-    local Data = game:GetService("HttpService"):JSONEncode(Embed)
-    local Head = {["content-type"] = "application/json"}
-    Send = http_request or request or HttpPost or syn.request
-    local sendhook = {Url = LinkHook, Body = Data, Method = "POST", Headers = Head}
-    Send(sendhook)
+            },
+        }
+        local Data = game:GetService("HttpService"):JSONEncode(Embed)
+        local Head = {["content-type"] = "application/json"}
+        Send = http_request or request or HttpPost or syn.request
+        local sendhook = {Url = LinkHook, Body = Data, Method = "POST", Headers = Head}
+        Send(sendhook)
+    end
 end
 
 function Hop()
