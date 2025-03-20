@@ -1,0 +1,216 @@
+	-- Webhook
+	function SendFullMoon(vux)
+		local Mystic = nil
+		local FullMoon_X = nil
+		if MysticIsland_S then
+			Mystic = "✅ Mystic Island spawn.🌴"  
+		else
+			Mystic = "❌ Mystic Island not spawn."
+		end
+	
+		if game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149431" then
+			FullMoon_X = tostring("5/5".." | ".."Full Moon 🌕 | "..tostring(game:GetService("Lighting").TimeOfDay))
+		elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149052" then
+			FullMoon_X = tostring("4/5".." | ".."75% | "..tostring(game:GetService("Lighting").TimeOfDay))
+		elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709143733" then
+			FullMoon_X = tostring("3/5".." | ".."50% | "..tostring(game:GetService("Lighting").TimeOfDay))
+		elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709150401" then
+			FullMoon_X = tostring("2/5".." | ".."25% | "..tostring(game:GetService("Lighting").TimeOfDay))
+		elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149680" then
+			FullMoon_X = tostring("1/5".." | ".."15% | "..tostring(game:GetService("Lighting").TimeOfDay))
+		else
+			FullMoon_X = tostring("0/5".." | ".."0% | "..tostring(game:GetService("Lighting").TimeOfDay))
+		end
+		local get_player_x = {}
+		for i,v in pairs(game.Players:GetChildren()) do
+			if not table.find(get_player_x,v.Name) then
+				table.insert(get_player_x,v.Name)
+			end
+		end
+		local url = vux
+		local data = {
+			["embeds"] = {
+				{
+					["color"] = tonumber(0xffffff);
+					["fields"] = {
+						{
+							["name"] = "Server Id";
+							["value"] = "```yaml\n"..tostring(game.JobId).."\n```";
+							["inline"] = false;
+						}, {
+							["name"] = "Full Moon";
+							["value"] = "```yaml\n"..FullMoon_X.."\n```";
+							["inline"] = true};
+						{
+							["name"] = "Player";
+							["value"] = "```yaml\n"..tostring(#get_player_x).."/"..game:GetService("Players").MaxPlayers.."\n```";
+							["inline"] = true;
+						},
+						{
+							["name"] = "Mirage Island";
+							["value"] = "```yaml\n"..tostring(Mystic).."\n```";
+							["inline"] = false;
+						}
+					};
+					["description"] = "**Join Script**\n```lua\n"..tostring('game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport","'..game.JobId..'")').."\n```";
+					["author"] = {
+						["name"] = "Switch Hub (Notification)";
+						["icon_url"] = "https://media.discordapp.net/attachments/1167889685411016756/1215942962467573860/SW.jpg?ex=65fe9621&is=65ec2121&hm=12d96eeae682639bd3987b5163ac2d2245d3fe09ad6d90a3a06e2a5fc5d98d90&=&format=webp&width=662&height=662";
+					};
+					["thumbnail"] = {
+						["url"] = "https://pbs.twimg.com/media/FDsZOHhVkAUsFeJ.jpg";
+					};
+					["footer"] = {
+						["text"] = "By Switch Hub";
+						["icon_url"] = "https://media.discordapp.net/attachments/1167889685411016756/1215942962467573860/SW.jpg?ex=65fe9621&is=65ec2121&hm=12d96eeae682639bd3987b5163ac2d2245d3fe09ad6d90a3a06e2a5fc5d98d90&=&format=webp&width=662&height=662";
+					};
+					["timestamp"] = DateTime.now():ToIsoDate()
+				}
+			},
+		}
+		local newdata = game:GetService("HttpService"):JSONEncode(data)
+	
+		local headers = {
+			["content-type"] = "application/json"
+		}
+		local request = http_request or request or HttpPost 
+		local R = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+		request(R)
+	end
+	function SendBoss(vux,bossname)
+		local get_player_x = {}
+		for i,v in pairs(game.Players:GetChildren()) do
+			if not table.find(get_player_x,v.Name) then
+				table.insert(get_player_x,v.Name)
+			end
+		end
+		local health_x = 100
+		for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+			if v.Name == bossname then
+				local health = v.Humanoid.Health
+				local maxhealth = v.Humanoid.MaxHealth
+				local percent = (health / maxhealth) * 100
+				health_x = percent
+			end
+		end
+		local xpt = bossname.." | "..tostring(game:GetService("Lighting").TimeOfDay)..' | '..health_x.."%"
+		local url = vux
+		local data = {
+			["embeds"] = {
+				{
+					["color"] = tonumber(0xffffff);
+					["fields"] = {
+						{
+							["name"] = "Server Id";
+							["value"] = "```yaml\n"..tostring(game.JobId).."\n```";
+							["inline"] = false;
+						}, {
+							["name"] = "Boss";
+							["value"] = "```yaml\n"..xpt.."\n```";
+							["inline"] = true};
+						{
+							["name"] = "Player";
+							["value"] = "```yaml\n"..tostring(#get_player_x).."/"..game:GetService("Players").MaxPlayers.."\n```";
+							["inline"] = true;
+						}
+					};
+					["description"] = "**Join Script**\n```lua\n"..tostring('game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport","'..game.JobId..'")').."\n```";
+					["author"] = {
+						["name"] = "Switch Hub (Notification)";
+						["icon_url"] = "https://media.discordapp.net/attachments/1167889685411016756/1215942962467573860/SW.jpg?ex=65fe9621&is=65ec2121&hm=12d96eeae682639bd3987b5163ac2d2245d3fe09ad6d90a3a06e2a5fc5d98d90&=&format=webp&width=662&height=662";
+					};
+					["thumbnail"] = {
+						["url"] = "https://pbs.twimg.com/media/FDsZOHhVkAUsFeJ.jpg";
+					};
+					["footer"] = {
+						["text"] = "By Switch Hub";
+						["icon_url"] = "https://media.discordapp.net/attachments/1167889685411016756/1215942962467573860/SW.jpg?ex=65fe9621&is=65ec2121&hm=12d96eeae682639bd3987b5163ac2d2245d3fe09ad6d90a3a06e2a5fc5d98d90&=&format=webp&width=662&height=662";
+					};
+					["timestamp"] = DateTime.now():ToIsoDate()
+				}
+			},
+		}
+		local newdata = game:GetService("HttpService"):JSONEncode(data)
+	
+		local headers = {
+			["content-type"] = "application/json"
+		}
+		local request = http_request or request or HttpPost 
+		local R = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+		request(R)
+	end
+	if _G.Keep_Job == nil then
+		_G.Keep_Job = {}
+	end
+	if _G.Keep_JobX == nil then
+		_G.Keep_JobX = {}
+	end
+	if Three_World then
+		spawn(function()
+			while wait(1) do
+				pcall(function()
+					if Three_World then
+						MysticIsland_S = false
+						if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
+							MysticIsland_S = true
+						end
+						FullMoon_S = false
+						if game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149431" and #game.Players:GetChildren() <= 7 then
+							FullMoon_S = true
+						end
+						if game.Workspace.Enemies:FindFirstChild('rip_indra True Form') or game.ReplicatedStorage:FindFirstChild('rip_indra True Form') then
+							if #game.Players:GetChildren() <= 9 and not table.find(_G.Keep_JobX,tostring(game.JobId)) then
+								table.insert(_G.Keep_JobX,tostring(game.JobId))
+								SendBoss('https://discord.com/api/webhooks/1352213898970923008/5kXl3YXJwr-AHcUTA7llvF3PIFjIODJncZ5ZQRqIqI0BG9dFvr8-QpyREBajiM1MH7p6','rip_indra True Form')
+							end
+						end
+						if #game.Players:GetChildren() <= 3 then
+							SendFullMoon('https://discord.com/api/webhooks/1325924531331666000/Vt3DG3GmRv1sXHxCGzMKttjGL4uGHTuacefkOK47FRYs7ylRaPtqe5DAf0OjgmG9Liwv')
+						end
+						if game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149052" and #game.Players:GetChildren() <= 9 then
+							local result = {}
+							local x = tostring(game:GetService("Lighting").TimeOfDay)
+							local regex = ("([^%s]+)"):format(":")
+							for each in x:gmatch(regex) do
+								table.insert(result, each)
+							end
+							if tonumber(result[1]) >= 0 and tonumber(result[1]) < 12 then
+								SendFullMoon('https://discord.com/api/webhooks/1221652726337896559/Oh6DerE386fvwmsezJC6g61N9eeEAt5DX0VP6DH6OZn61PE-to82F6lIJoedksEChVpL')
+							end
+						end
+						if FullMoon_S and not table.find(_G.Keep_Job,tostring(game.JobId)) and game:GetService("Lighting").LightingLayers.Night.Intensity.Value == 1 then
+							table.insert(_G.Keep_Job,tostring(game.JobId))
+							SendFullMoon('https://discord.com/api/webhooks/1325924531331666000/Vt3DG3GmRv1sXHxCGzMKttjGL4uGHTuacefkOK47FRYs7ylRaPtqe5DAf0OjgmG9Liwv')
+							return
+						elseif MysticIsland_S and not table.find(_G.Keep_Job,tostring(game.JobId)) then
+							table.insert(_G.Keep_Job,tostring(game.JobId))
+							SendFullMoon('https://discord.com/api/webhooks/1352217370277576767/4-kfkWvpdWO-3w96iDkw9FeiLumPYH1r0p42mdTTtaCBqhbV2gPeptU9awywwnL12y4w')
+							return
+						end	
+						wait(10)
+					end
+				end)
+			end
+		end)
+	elseif New_World then
+		spawn(function()
+			while wait(1) do
+				pcall(function()
+					if game.Workspace.Enemies:FindFirstChild('Cursed Captain') or game.ReplicatedStorage:FindFirstChild('Cursed Captain') then
+						if #game.Players:GetChildren() <= 10 and not table.find(_G.Keep_JobX,tostring(game.JobId)) then
+							table.insert(_G.Keep_JobX,tostring(game.JobId))
+							SendBoss('https://discord.com/api/webhooks/1352213898970923008/5kXl3YXJwr-AHcUTA7llvF3PIFjIODJncZ5ZQRqIqI0BG9dFvr8-QpyREBajiM1MH7p6','Cursed Captain')
+						end
+					end
+					if game.Workspace.Enemies:FindFirstChild('Darkbeard') or game.ReplicatedStorage:FindFirstChild('Darkbeard') then
+						if #game.Players:GetChildren() <= 10 and not table.find(_G.Keep_JobX,tostring(game.JobId)) then
+							table.insert(_G.Keep_JobX,tostring(game.JobId))
+							SendBoss('https://discord.com/api/webhooks/1352214035436933251/HLvtPk5sq7UKdIZf2Ee5cUZrGq4tIk-guImeclxf0lz_yLV9yxSa-_SYbm5X1DXf7Y7X','Darkbeard')
+						end
+					end
+				end)
+			end
+		end)
+	end
+
+end
