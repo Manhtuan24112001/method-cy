@@ -1,5 +1,5 @@
 spawn(function()
-    while wait(30) do
+    while wait(60) do
         pcall(function()
             if game.Workspace.Enemies:FindFirstChild('rip_indra True Form') or game.ReplicatedStorage:FindFirstChild('rip_indra True Form') then
                 print("Boss rip_indra True Form đã xuất hiện!")
