@@ -1,0 +1,12 @@
+spawn(function()
+    while wait(30) do
+        pcall(function()
+            if game.Workspace.Enemies:FindFirstChild('rip_indra True Form') or game.ReplicatedStorage:FindFirstChild('rip_indra True Form') then
+                print("Boss rip_indra True Form đã xuất hiện!")
+            else
+                print("Boss rip_indra True Form chưa xuất hiện. Đang tải script hopbossbebe...")
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/method-cy/refs/heads/main/hopbossbebe"))()
+            end
+        end)
+    end
+end)
