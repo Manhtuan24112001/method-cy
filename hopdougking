@@ -7,6 +7,6 @@ spawn(function()
                 print("Boss Dough King chưa xuất hiện. Đang tải script hopbossbebe...")
                 loadstring(game:HttpGet("https://raw.githubusercontent.com/Manhtuan24112001/method-cy/refs/heads/main/hopbossbossbebe2"))()
             end
-        end
-
-
+        end)
+    end
+end)
