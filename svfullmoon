@@ -1,7 +1,4 @@
---[[ 
-    WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk! 
-]]
-LinkHook = "https://discord.com/api/webhooks/1325924531331666000/Vt3DG3GmRv1sXHxCGzMKttjGL4uGHTuacefkOK47FRYs7ylRaPtqe5DAf0OjgmG9Liwv" -- webhook to send the moon status
+LinkHook = "https://discord.com/api/webhooks/1325924531331666000/Vt3DG3GmRv1sXHxCGzMKttjGL4uGHTuacefkOK47FRYs7ylRaPtqe5DAf0OjgmG9Liwv" -- Webhook để gửi thông báo Full Moon
 
 local Moon = {
     ['8'] = "http://www.roblox.com/asset/?id=9709149431", -- 🌕
@@ -14,88 +11,55 @@ local Moon = {
     ['1'] = "http://www.roblox.com/asset/?id=9709149680", -- 🌔
 }
 
-if game:GetService("Lighting").Sky.MoonTextureId == Moon['1'] then
-    MoonIcon = '🌔'
-elseif game:GetService("Lighting").Sky.MoonTextureId == Moon['2'] then
-    MoonIcon = '🌓'
-elseif game:GetService("Lighting").Sky.MoonTextureId == Moon['3'] then
-    MoonIcon = '🌒'
-elseif game:GetService("Lighting").Sky.MoonTextureId == Moon['4'] then
-    MoonIcon = '🌑'
-elseif game:GetService("Lighting").Sky.MoonTextureId == Moon['5'] then
-    MoonIcon = '🌘'
-elseif game:GetService("Lighting").Sky.MoonTextureId == Moon['6'] then
-    MoonIcon = '🌗'
-elseif game:GetService("Lighting").Sky.MoonTextureId == Moon['7'] then
-    MoonIcon = '🌖'
-elseif game:GetService("Lighting").Sky.MoonTextureId == Moon['8'] then
-    MoonIcon = '🌕'
-end
+local Lighting = game:GetService("Lighting")
+local Players = game:GetService("Players")
+local TeleportService = game:GetService("TeleportService")
+local HttpService = game:GetService("HttpService")
 
-for i,v in pairs(Moon) do
-    if game:GetService("Lighting").Sky.MoonTextureId == v then
-        MoonPercent = i / 8 * 100
+local MoonTexture = Lighting:FindFirstChild("Sky") and Lighting.Sky.MoonTextureId or ""
+local MoonIcon, MoonPercent
+
+for i, v in pairs(Moon) do
+    if MoonTexture == v then
+        MoonIcon = ({"🌔", "🌓", "🌒", "🌑", "🌘", "🌗", "🌖", "🌕"})[tonumber(i)] or "❓"
+        MoonPercent = tonumber(i) / 8 * 100
+        break
     end
 end
 
-for i,v in pairs(game.Players:GetPlayers()) do
-    PlayersMin = i
-end
+local PlayersCount = #Players:GetPlayers()
+local JobId = game.JobId
+local CodeServer = string.format(
+    'game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "%s")',
+    JobId
+)
 
-MoonMessage = '```'..tostring(MoonPercent..'%'..' : '..MoonIcon)..'```'
-CodeServer = 'game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,'..'\''..tostring(game.JobId)..'\''..')'
-function logTime(...) log(..., "|", math.round((tick() - loadTime) * 1000), "ms") end
-
--- Kiểm tra mặt trăng và số người chơi
-if (game:GetService("Lighting").Sky.MoonTextureId == Moon['7'] or game:GetService("Lighting").Sky.MoonTextureId == Moon['8']) then
-    local PlayersCount = #game.Players:GetPlayers() -- Lấy số lượng người chơi hiện tại trong server
-
-    -- Nếu số người chơi dưới 4 và mặt trăng là Moon 7 (🌖) hoặc Moon 8 (🌕) thì gửi thông báo webhook
-    if PlayersCount < 4 then
-        local Embed = {
-            ["username"] = "Full Moon Notify",
-            ["avatar_url"] = "https://cdn.discordapp.com/attachments/1258228428881137677/1258228644959096907/1705502093042.jpg?ex=6687483d&is=6685f6bd&hm=31d72cdb691c08bba64e22e59af42a1c4bad11b6ef8bad223436bf883d4e334a&",
-            ["embeds"] = {
-                {
-                    ["title"] = "**Full Moon Notify**",
-                    ["color"] = tonumber(00000000),
-                    ["type"] = "rich",
-                    ["fields"] =  {
-                        {
-                            ["name"] = "Players",
-                            ["value"] = '```'..tostring(PlayersCount)..'/12```',
-                            ["inline"] = false
-                        },
-                        {
-                            ["name"] = "Job Id",
-                            ["value"] = '```'..tostring(game.JobId)..'```',
-                            ["inline"] = false
-                        },
-                        {
-                            ["name"] = "Code",
-                            ["value"] = '```'..CodeServer..'```',
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Moon",
-                            ["value"] = ''..MoonMessage..'',
-                            ["inline"] = true
-                        }
-                    },
-                    ["thumbnail"] = {
-                        ["url"] = "https://cdn.discordapp.com/attachments/1258228428881137677/1258228644959096907/1705502093042.jpg?ex=6687483d&is=6685f6bd&hm=31d72cdb691c08bba64e22e59af42a1c4bad11b6ef8bad223436bf883d4e334a&",
-                    },
-                    ["footer"] = {
-                        ["timestamp"] = DateTime.now():ToIsoDate(),
-                        ["icon_url"] = "https://cdn.britannica.com/89/145489-050-4E9609BA/moon-return-journey-Apollo-11-July-21-1969.jpg"
-                    }
-                }
+local Embed = {
+    ["username"] = "W-azure Notifier.Exe",
+    ["avatar_url"] = "https://cdn.discordapp.com/icons/1234567890/abcdef.png",
+    ["embeds"] = {
+        {
+            ["title"] = "**Server Full Moon**",
+            ["color"] = 16776960,
+            ["fields"] = {
+                { ["name"] = "Player Count", ["value"] = tostring(PlayersCount), ["inline"] = true },
+                { ["name"] = "Time Remaining", ["value"] = "Unknown", ["inline"] = true },
+                { ["name"] = "Is Night", ["value"] = "True", ["inline"] = true },
+                { ["name"] = "Job Id", ["value"] = JobId, ["inline"] = false },
+                { ["name"] = "Join Script", ["value"] = '```'..CodeServer..'```', ["inline"] = false },
+                { ["name"] = "Moon", ["value"] = string.format("`%.1f%%` %s", MoonPercent or 0, MoonIcon or "❓"), ["inline"] = true }
             },
+            ["footer"] = {
+                ["text"] = "W-azure • Hôm nay lúc " .. os.date("%H:%M"),
+                ["icon_url"] = "https://cdn.discordapp.com/icons/1234567890/abcdef.png"
+            }
         }
-        local Data = game:GetService("HttpService"):JSONEncode(Embed)
-        local Head = {["content-type"] = "application/json"}
-        Send = http_request or request or HttpPost or syn.request
-        local sendhook = {Url = LinkHook, Body = Data, Method = "POST", Headers = Head}
-        Send(sendhook)
-    end
+    }
+}
+
+local Data = HttpService:JSONEncode(Embed)
+local Headers = { ["content-type"] = "application/json" }
+local Send = http_request or request or HttpPost or syn.request
+if LinkHook ~= "" then
+    Send({ Url = LinkHook, Body = Data, Method = "POST", Headers = Headers })
 end
